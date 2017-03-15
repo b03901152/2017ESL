@@ -1,0 +1,3 @@
+CREATE USER 'jeffrey'@'localhost' IDENTIFIED BY 'mypass';
+GRANT ALL ON db1.* TO 'jeffrey'@'localhost';
+./node_module/.bin/sequelize db:migrate

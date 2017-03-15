@@ -1,0 +1,77 @@
+.ChatBlock .msg {
+  margin: 1em;
+}
+
+.ChatBlock .msg .author {
+	color: gray;
+}
+
+.ChatBlock .msg .insideMsg {
+  display: inline-block;
+  border-radius: 1em;
+  background: lightgray;
+  float: left;
+}
+
+.ChatBlock .msg .text {
+  display: inline-block;
+  margin: 0.5em;
+}
+
+
+.ChatBlock .msg .info {
+  color: gray;
+  display: inline-block;
+  margin: 0.5em;
+  font-size: 0.8em;
+}
+
+/*==================================*/
+
+.ChatBlock .myMsg {
+  margin: 1em;
+}
+
+.ChatBlock .myMsg .MyInsideMsg {
+  clear: right;
+  float: right;
+  display: inline-block;
+  border-radius: 1em;
+  background: skyblue;
+}
+
+.ChatBlock .myMsg .MyText {
+  display: inline-block;
+  margin: 0.5em;
+}
+
+
+.ChatBlock .myMsg .MyInfo {
+  float: right;
+  color: gray;
+  display: inline-block;
+  margin: 0.5em;
+  font-size: 0.8em;
+}
+
+.ChatBlock .myMsg .MyInfo .isread{
+  float: right;
+}
+
+.ChatBlock .myMsg .MyInfo .sentDate{
+  float: right;
+  clear: right;
+}
+
+/*======================================*/
+
+.ChatBlock .chatting {
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  height: 90%;
+}
+
+.ChatBlock .hide {
+  display: none;
+}

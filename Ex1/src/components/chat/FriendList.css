@@ -1,0 +1,28 @@
+.FriendList .name {
+	float: left;
+	clear: left;
+}
+
+.FriendList .msg {
+	color: gray;
+	float: left;
+	clear: left;
+	margin-bottom: 1em;
+}
+
+.FriendList .date {
+	float:right;
+	color: gray;
+}
+
+.Friend:hover {
+	background: rgb( 240, 240, 240 );
+}
+
+.Friend {
+	overflow:auto;
+}
+
+.FriendList .chatting { 
+	background: rgb( 230, 230, 230 );
+}

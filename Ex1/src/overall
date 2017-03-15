@@ -1,0 +1,37 @@
+api:
+	api
+	auth
+	chat
+	
+src:
+	component:
+		Chat
+		Login
+		Signup
+		App
+
+	container:
+		ChatContainer
+		LoginContainer
+		SignupContainer
+
+	reducer:
+		chat
+		login
+		signup
+
+store:
+	login:
+	signup:
+	chat:
+		username: 'name'
+		friendlist:[ {
+			name: 'name',
+			lastMsg: 'msg'
+		} ]
+		chatBlock:[ { 
+			author: 'you',
+			msg: 'msg',
+			isread: false,
+			sentDate: '2016/05/01 02:30'
+		} ]
