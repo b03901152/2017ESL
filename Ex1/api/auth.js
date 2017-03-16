@@ -3,6 +3,7 @@ import express from 'express';
 import models from '../src/models';
 import multer from 'multer';
 import bcrypt from 'bcryptjs';
+import Message from '../src/DataStructure/Message.js';
 const upload = multer();
 
 const { User } = models;
@@ -13,6 +14,26 @@ authRouter.use( bodyParser.urlencoded( { extended: false } ) );
 authRouter.use( bodyParser.json() );
 authRouter.use( express.static( 'public' ) );
 
+const defaultMsg = new Message(
+  'you',
+  [
+    'text',
+    'defaultMsg',
+  ],
+  'default isread' );
+
+
+
+let defaultFL = [
+    {
+      name: '1',
+      msgs: [ defaultMsg ],
+    },
+    {
+      name: '123',
+      msgs: [ defaultMsg ],
+    },
+  ];
 
 authRouter.get( '/profile', async ( req, res ) => {
   if ( req.session.loggedInUserId ) {
@@ -32,6 +53,7 @@ authRouter.post( '/check', ( req, res ) => {
       status: true,
       userId,
       username,
+      friendList: defaultFL,
     } );
   }
   res.json( {
@@ -48,6 +70,7 @@ authRouter.post( '/signup', async ( req, res ) => {
     const check_user_name = await User.find( {
       where: {
         name,
+
       },
     } );
 
@@ -66,7 +89,11 @@ authRouter.post( '/signup', async ( req, res ) => {
       password,
       email,
     } );
-    res.json( { user, status: true } );
+    res.json( {
+      user,
+      status: true,
+      friendList: defaultFL,
+    } );
   }
   catch ( err ) {
     console.error( err );
@@ -89,9 +116,10 @@ authRouter.post( '/login', async ( req, res ) => {
     if ( password === user.password ) {
       req.session.loggedInUserId = user.id;
       req.session.loggedInUserName = user.name;
-      res.json( { 
+      res.json( {
         status: true,
-        username: user.name
+        username: user.name,
+        friendList: defaultFL,
        } );
     }
     else
@@ -104,6 +132,7 @@ authRouter.post( '/login', async ( req, res ) => {
 
 authRouter.post( '/logout', ( req, res ) => {
   req.session.destroy();
+  console.log( 'logout' );
   res.json( {
     status: true,
   } );

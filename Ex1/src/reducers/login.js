@@ -9,9 +9,10 @@ const login = (state = preState, action) => {
       return {
       	sentences: [ ...state.sentences, action.text ]
       };
+
     default:
       return state;
   }
 }
 
-export default login
+export default login;

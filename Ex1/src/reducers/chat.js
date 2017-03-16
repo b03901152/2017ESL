@@ -82,26 +82,12 @@ const chat = ( state = preState, action ) => {
         username: action.username,
       };
     case 'LOAD_FRIEND':
-      let cloneState = clone( state );
-      const a = async () => {
-      var res = await fetch( '/loadFriend', {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        method: 'GET',
-        credentials: 'same-origin',
-      } ).then( res => res.json() )
-      .then( res => {
-        console.log( 'load friend' );
-        console.log( 'cloneState00:', cloneState );
-        cloneState.friendList = res.friendList;
-        console.log( 'cloneState11:', cloneState );
-      } );
-      return cloneState;
-      }
-      return state;
-      // return a();
+      console.log( 'LOAD_FRIEND' );
+      console.log( 'action.friendList:' , action.friendList );
+      return {
+        ...state,
+        friendList: action.friendList,
+      };
     case 'SWITCH_FRIEND':
       return {
         ...state,

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ChatBlock from './ChatBlock.js';
-import Config from './Config';
+import Config from '../../containers/ConfigContainer';
 import FriendList from './FriendList';
 
 class App extends Component {

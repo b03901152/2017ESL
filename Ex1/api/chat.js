@@ -57,7 +57,7 @@ let defaultFL = [
       name: '123',
       msgs: [ defaultMsg ],
     },
-  ]
+  ];
 
 const { User } = models;
 const returnRouter = function ( io ) {

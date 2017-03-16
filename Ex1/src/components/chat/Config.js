@@ -72,7 +72,9 @@ class App extends Component {
   );
 
   render() {
-    return this.uploadImg();
+    return <div>
+      <button onClick = { () => this.props.logout() }>Logout</button>
+    </div>;
   }
 }
 

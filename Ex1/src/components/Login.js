@@ -23,23 +23,12 @@ class Login extends Component {
         if ( res.status ) {
           this.props.setLoc( 'chat' );
           this.props.setUser( res.username );
-          this.fetchToLoadFriend();
+          console.log( 'login fontend res.friendList :', res.friendList );
+          this.props.loadFriend( res.friendList );
         }
       } );
   }
 
-  fetchToLoadFriend = () => {
-    fetch( '/loadFriend/', {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      method: 'GET',
-      credentials: 'same-origin',
-    } )
-    .then( res => res.json() )
-    .then( res => this.props.loadFriend( res ) );
-  }
   componentDidMount() {
       this.username.value = '1';
       this.password.value = '1';
@@ -64,6 +53,7 @@ class Login extends Component {
       .then( ( res ) => {
         if ( res.status ) {
           this.props.setLoc( 'chat' );
+          this.props.loadFriend( res.friendList );
           this.props.setUser( res.username );
         }
       } );

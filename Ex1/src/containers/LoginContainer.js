@@ -11,10 +11,12 @@ const setUser = username => ( {
   username,
 } );
 
-const loadFriend = friendList => ( {
+const loadFriend = friendList => {
+  console.log( 'friendListContainer:', friendList );
+  return {
   type: 'LOAD_FRIEND',
   friendList
-} );
+} };
 
 const mapDispatchToProps = ( {
   setLoc,
