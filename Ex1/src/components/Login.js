@@ -61,9 +61,9 @@ class Login extends Component {
   render() {
     return (
       <div className="login jumbotron">
-        <h1>Foodzone</h1>
+        <h1>Chat room</h1>
         <form>
-          <h2>Logisn</h2>
+          <h2 style = {{ position: 'relative', left: '17em'}}>Login</h2>
           <div id="wrongPassword"/>
           <div className="form-group">
             <label htmlFor="username" />
