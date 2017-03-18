@@ -9,13 +9,18 @@ const mapStateToProps = ( state ) => ( {
 } );
 
 
-const loadFriend = () => ( {
+const loadFriend = friendList => {
+  console.log( 'loadFriend in container:', loadFriend );
+  return {
   type: 'LOAD_FRIEND',
-} );
+  friendList,
+  };
+};
 
-const addFriend = name => ( {
+const addFriend = ( name, groupID ) => ( {
   type: 'ADD_FRIEND',
-  name
+  groupID,
+  name,
 } );
 
 const switchFriend = chatIdx => ( {
@@ -23,14 +28,14 @@ const switchFriend = chatIdx => ( {
   chatIdx,
 } );
 
-const setChat = chat => ( {
+const setChat = msg => ( {
   type: 'SET_CHAT',
-  msg: new Message( chat.author, chat.msg, true ),
+  msg,
 } );
 
-const getChat = chat => ( {
+const getChat = msg => ( {
   type: 'GET_CHAT',
-  msg: new Message( chat.author, chat.msg, true ),
+  msg,
 } );
 
 const sort = () => ( {

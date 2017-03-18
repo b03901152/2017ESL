@@ -10,6 +10,7 @@ class Login extends Component {
   }
 
   componentWillMount() {
+    console.log('login componentWillMount');
     console.log( 'componentsWillMount' );
     fetch( '/auth/check/', {
       headers: {
@@ -23,8 +24,6 @@ class Login extends Component {
         if ( res.status ) {
           this.props.setLoc( 'chat' );
           this.props.setUser( res.username );
-          console.log( 'login fontend res.friendList :', res.friendList );
-          this.props.loadFriend( res.friendList );
         }
       } );
   }
@@ -53,7 +52,7 @@ class Login extends Component {
       .then( ( res ) => {
         if ( res.status ) {
           this.props.setLoc( 'chat' );
-          this.props.loadFriend( res.friendList );
+          console.log( 'login res', res );
           this.props.setUser( res.username );
         }
       } );

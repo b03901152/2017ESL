@@ -1,24 +1,16 @@
 module.exports = ( sequelize, DataTypes ) => {
-  const Message = sequelize.define( 'Message', {
+  const UserGroup = sequelize.define( 'UserGroup', {
     id: {
       allowNull: false,
       primaryKey: true,
       type: DataTypes.INTEGER,
       autoIncrement: true,
     },
-    senderUserId: {
+    userID: {
       allowNull: false,
       type: DataTypes.INTEGER,
     },
-    recipientGroupId: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-    },
-    type: {
-      allowNull: false,
-      type: DataTypes.STRING,
-    },
-    text: {
+    groupID: {
       allowNull: false,
       type: DataTypes.STRING,
     },
@@ -32,5 +24,5 @@ module.exports = ( sequelize, DataTypes ) => {
     },
   }, { freezeTableName: true } );
 
-  return Message;
+  return UserGroup;
 };

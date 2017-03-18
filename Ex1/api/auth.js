@@ -6,7 +6,7 @@ import bcrypt from 'bcryptjs';
 import Message from '../src/DataStructure/Message.js';
 const upload = multer();
 
-const { User } = models;
+const { ChatGroup, User, UserGroup } = models;
 const authRouter = new Router();
 
 import bodyParser from 'body-parser';
@@ -22,14 +22,14 @@ const defaultMsg = new Message(
   ],
   'default isread' );
 
-
-
 let defaultFL = [
     {
+      groupID: 10000,
       name: '1',
       msgs: [ defaultMsg ],
     },
     {
+      groupID: 10001,
       name: '123',
       msgs: [ defaultMsg ],
     },
@@ -53,7 +53,6 @@ authRouter.post( '/check', ( req, res ) => {
       status: true,
       userId,
       username,
-      friendList: defaultFL,
     } );
   }
   res.json( {
@@ -64,8 +63,6 @@ authRouter.post( '/check', ( req, res ) => {
 authRouter.post( '/signup', async ( req, res ) => {
   try {
     console.log( 'signup:', req.body );
-    // console.log( 'signup:', req );
-
     const { password, name, email } = req.body;
     const check_user_name = await User.find( {
       where: {
@@ -103,27 +100,20 @@ authRouter.post( '/signup', async ( req, res ) => {
 authRouter.post( '/login', async ( req, res ) => {
   try {
     const { password, name } = req.body;
-    console.log( 'login:', req.body );
     const user = await User.find( {
       where: {
         password,
       },
     } );
-    if ( !user ) {
-      res.json( { status: false } );
-      return;
-    }
-    if ( password === user.password ) {
+    if ( user && ( password === user.password ) ) {
       req.session.loggedInUserId = user.id;
       req.session.loggedInUserName = user.name;
-      res.json( {
+      res.json( { 
         status: true,
         username: user.name,
-        friendList: defaultFL,
-       } );
-    }
-    else
-      res.json( { status: false } );
+      } );
+    };
+    res.json( { status: false } );
   }
   catch ( err ) {
     console.log( err );

@@ -35,19 +35,15 @@ const defaultMsg4 = new Message(
   ],
   'default isread' );
 
+const DF = {
+  name: 'action.name',
+  msgs: [ defaultMsg ],
+  groupID: 1000,
+};
 
 const preState = {
   username: 'Myname',
-  friendList: [
-    {
-      name: 'XXX',
-      msgs: [ defaultMsg ],
-    },
-    {
-      name: 'XXX',
-      msgs: [ defaultMsg ],
-    },
-  ],
+  friendList: [ DF ],
   chatIdx: 0,
 };
 
@@ -55,28 +51,17 @@ const chat = ( state = preState, action ) => {
   switch ( action.type ) {
     case 'ADD_FRIEND':
       let newState = clone( state );
-      const friend = {
+      const newFriend = {
           name: action.name,
           msgs: [ defaultMsg ],
+          groupID: action.groupID,
       };
-      console.log( 'newState before', newState );
-      newState.friendList.unshift( friend );
-      console.log( 'newState after', newState );
-      fetch( '/addFriend', {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        body: JSON.stringify( { friend } ),
-        credentials: 'same-origin',
-      } )
-      .then( res => res.json() )
-      .then( res =>  newState.friendList = res.friendList )
-      .then( () => console.log( 'add friend newState:', newState ) );
-      return newState;
+      return {
+        ...state,
+        friendList: [ newFriend, ...state.friendList ],
+      };
     case 'SET_USER':
-      console.log('set user!!!!', action.username);
+      console.log('set user', action.username);
       return {
         ...state,
         username: action.username,
@@ -95,15 +80,33 @@ const chat = ( state = preState, action ) => {
       };
     case 'GET_CHAT':
       const friendList = state.friendList.slice();
-      friendList[ state.chatIdx ].msgs.push( action.msg );
-      return {
-        ...state,
-        friendList,
-      };
+      console.log( 'GET_CHAT', action );
+      for ( let FLidx = 0; FLidx < friendList.length; FLidx += 1 )
+      {
+        if ( friendList[ FLidx ].groupID === action.msg.recipientGroupId )
+        {
+          friendList[ FLidx ].msgs.push( {
+            author: action.msg.name,
+            isread: false,
+            sentDate: action.msg.sentDate,
+            msg: [ action.msg.type, action.msg.text ],
+          } );
+        };
+        return {
+          ...state,
+          friendList,
+        };
+      }
+      return state;
     case 'SET_CHAT':
-      console.log( 'SET_CHAT' );
-      var friendList = state.friendList.slice();
-      friendList[ state.chatIdx ].msgs.push( action.msg );
+      console.log( 'SET_CHAT, action:', action.msg );
+      var friendList = clone( state.friendList );
+      friendList[ state.chatIdx ].msgs.push( {
+        author: state.username,
+        isread: true,
+        sentDate: new Date(),
+        msg: action.msg,
+      } );
       fetch( '/setChat', {
         headers: {
           Accept: 'application/json',
@@ -111,8 +114,9 @@ const chat = ( state = preState, action ) => {
         },
         method: 'POST',
         body: JSON.stringify( {
-          msg:action.msg,
-          recipient: state.friendList[ state.chatIdx ].name,
+          type: action.msg[ 0 ],
+          text: action.msg[ 1 ],
+          recipientGroupId: friendList[ state.chatIdx ].groupID,
         } ),
         credentials: 'same-origin',
       } );

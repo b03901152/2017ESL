@@ -1,25 +1,17 @@
 module.exports = {
   up( queryInterface, Sequelize ) {
-    return queryInterface.createTable( 'Message', {
+    return queryInterface.createTable( 'UserGroup', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.INTEGER,
         autoIncrement: true,
       },
-      senderUserId: {
+      userID: {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
-      recipientGroupId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-      },
-      type: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      text: {
+      groupID: {
         allowNull: false,
         type: Sequelize.STRING,
       },
@@ -33,8 +25,7 @@ module.exports = {
       },
       } );
   },
-
   down( queryInterface ) {
-    return queryInterface.dropTable( 'Message' );
+    return queryInterface.dropTable( 'UserGroup' );
   },
 };

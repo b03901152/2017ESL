@@ -5,22 +5,12 @@ import FriendList from './FriendList';
 
 class App extends Component {
   componentWillMount() {
-    // console.log( 'app will:', this.props );
-    console.log( 'this.props.loadFriend();' );
-    // this.props.loadFriend();
   }
 
   componentDidMount() {
-    // console.log( 'chat app:', this.props );
   }
 
   componentDidUpdate() {
-    const a = async () => {
-      await console.log( 'loadFriend1', this.props );
-      await this.props.loadFriend();
-      await console.log( 'loadFriend2', this.props );
-    };
-    // a();
 
   }
 
@@ -30,8 +20,9 @@ class App extends Component {
           <div className = "col-xs-4">
             <FriendList friendList = { this.props.friendList }
               chatIdx = { this.props.chatIdx }
-              switchFriend = { this.props.switchFriend } 
+              switchFriend = { this.props.switchFriend }
               addFriend = { this.props.addFriend }
+              loadFriend = { this.props.loadFriend }
               />
           </div>
           <div className = "col-xs-4" >

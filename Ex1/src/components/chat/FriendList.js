@@ -12,6 +12,48 @@ class App extends Component {
   componentDidMount() {
   }
 
+  componentWillMount() {
+    console.log( 'friend list componentWillMount' );
+    // this.props.loadFriend( '123' )''
+    fetch( '/loadFriend', {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'GET',
+      credentials: 'same-origin',
+    } )
+    .then( res => res.json() )
+    .then( res => {
+      console.log( 'friend list res', res );
+      this.props.loadFriend( res.friendList );
+    } );
+  }
+
+  addFriend = friendName => {
+    fetch( '/addFriend', {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify( { friendName } ),
+      credentials: 'same-origin',
+    } )
+    .then( res => res.json() )
+    .then( res => {
+      if( res.status ) {
+        console.log(' add friend ' );
+        this.props.addFriend( friendName, res.groupID );
+        this.setState( { addFriendHint: `add ${this.friendID.value} success.` } );
+      }
+      else
+         this.setState( { addFriendHint: `add ${this.friendID.value} fail.` } );
+    } );
+  }
+  
+  renderPreMsg = msgs => ( msgs[0] === 'text' ? msgs[1] : msgs[0] );
+
   renderOption = () => {
     switch( this.state.option ) {
       case 'chat':
@@ -27,7 +69,7 @@ class App extends Component {
             onClick = { () => this.props.switchFriend( i ) }>
             <div className = 'name'> { v.name } </div>
             <div className = 'date'> { v.msgs[0].sentDate.toLocaleString() } </div>
-            <div className = 'msg'> { v.msgs[0].msg } </div>
+            <div className = 'msg'> { this.renderPreMsg( v.msgs[0].msg ) } </div>
           </div>  )
         }
       </div>
@@ -43,12 +85,8 @@ class App extends Component {
                             ref = { ref => this.friendID = ref }
                             onKeyPress = { e => {
                               if ( e.key === 'Enter' ) {
-                                if ( this.props.addFriend( this.friendID.value ) ) {
+                                if ( this.addFriend( this.friendID.value ) )
                                   this.friendID.value = '';
-                                  this.setState( { addFriendHint: `add ${this.friendID.value} success.` } );
-                                } else {
-                                  this.setState( { addFriendHint: `${this.friendID.value} not found.` } );
-                                }
                               }
                             } }
                             placeholder = 'Search by ID'/>

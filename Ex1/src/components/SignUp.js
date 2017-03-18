@@ -9,6 +9,10 @@ class SignUp extends Component {
     this.password.value = '123';
   }
 
+  componentWillMount() {
+    console.log('signup componentWillMount');
+  }
+
   clear() {
     this.username.value = '';
     this.email.value = '';

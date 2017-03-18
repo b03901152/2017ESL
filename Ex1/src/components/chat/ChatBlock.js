@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Modal, Button } from 'react-bootstrap';
 import './ChatBlock.css';
 
 const socket = io.connect();
@@ -8,9 +9,9 @@ class App extends Component {
     super( props );
     this.state = {
       intitialized: false,
+      showModal: false,
     };
-    socket.on( 'getChat', chat => this.props.getChat( chat ) );
-    // console.log( 'this.props', this.props );
+    socket.on( 'getChat', msg => this.props.getChat( msg ) );
   }
 
   isread = isread => {
@@ -25,39 +26,24 @@ class App extends Component {
   componentWillReceiveProps( next ) {
     if ( ! this.state.intitialized ) {
       socket.emit( 'init', next.username );
-      // console.log( 'componentWillReceiveProps username:', next.username );
       this.setState( { intitialized: true } );
     }
   }
 
   componentDidUpdate() {
-    // console.log( 'this.chatting.scrollTop:', this.chattingBlock.scrollTop );
-    // console.log( 'this.chatting.scrollHeight:', this.chattingBlock.scrollHeight );
     this.chattingBlock.scrollTop = this.chattingBlock.scrollHeight;
-    // console.log( 'this.chatting.scrollTop:', this.chattingBlock.scrollTop );
-    // this.props.watch( 'msg' ,() => console.log( this.props.msg ) );
-
   }
 
   componentDidMount() {
-    // console.log( 'this.chatting:', this.chattingBlock );
-    // this.chattingBlock.watch( 'scrollTop', console.log( this.chattingBlock ) );
-    // console.log( 'msg:', this.props.msg );
-    // console.log( 'msg0:', this.props.msg[0] );
-    // console.log( 'msg01:', this.props.msg[0].author );
-    // console.log( 'did username:', this.props.username );
   }
 
   renderMsg = msg => {
-    // console.log( 'renderMsg:', msg[ 0 ] );
     switch( msg[ 0 ] ) {
       case 'text':
         return <div> { msg[1] } </div>
       case 'image':
-        // console.log( 'render image:', msg[1] );
         return <img 
               src = { 'http://localhost:3000/' + msg[ 1 ] }
-              // src={ window.location.href + msg[1] } 
               width='400px' height='400px' />
       case 'audio':
         return (<audio
@@ -65,7 +51,6 @@ class App extends Component {
                 controls>
               </audio>);
       case 'vedio':
-        // console.log( 'vedio' );
         return <video width="480" controls
         poster="https://archive.org/download/WebmVp8Vorbis/webmvp8.gif" >
         <source
@@ -127,32 +112,42 @@ class App extends Component {
       body: signUpForm,
     } ).then( res => res.json() )
     .then( res =>
-      this.props.setChat( {
-      msg: [ type, res.originalname ],
-      author: this.props.username,
-      } )
+      this.props.setChat( [ type, res.originalname ] )
     );
   };
+
+  close = () => this.setState( { showModal: false} );
+
+  model = () => ( <Modal show={ this.state.showModal } onHide={ this.close } >
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h4>Text in a modal</h4>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.close}>Close</Button>
+        </Modal.Footer>
+      </Modal> );
+
   render() {
     return ( <div className = 'ChatBlock' >
       <div> username: { this.props.username } </div>
-      <span className="glyphicon glyphicon-plus"></span>
+      <span className="glyphicon glyphicon-plus" 
+      onClick = { () => this.setState( { showModal: true } ) } ></span>
+      { this.model() }
       <div className="chatting" 
-      // onChange = { (e) => console.log( e ) }
       ref = { ref => this.chattingBlock = ref }>
         { this.chatting() }
       </div>
-        <input type="text" className="form-control" 
+        <input type="text" className="form-control"
           ref = { ref => this.input = ref }
           onKeyPress = { async e => {
               if ( e.key === 'Enter' && this.input.value.trim() ) {
-                this.props.setChat( {
-                  msg: [ 'text', this.input.value.trim() ],
-                  author: this.props.username,
-                } );
+                this.props.setChat( [ 'text', this.input.value.trim() ] );
                 this.input.value = '';
               }
-            } 
+            }
           }
           placeholder = 'Please enter a message'/>
         <div>
@@ -168,7 +163,6 @@ class App extends Component {
           className = { "hide" } 
           ref = { ref => this.vedio = ref }
           onChange = { e => {
-            // console.log( 'e.value', e.target.files[ 0 ].name );
             this.upload( 'image', e.target.files[ 0 ]  );
           } }
           accept="image/*" />

@@ -1,3 +1,9 @@
-CREATE USER 'jeffrey'@'localhost' IDENTIFIED BY 'mypass';
-GRANT ALL ON db1.* TO 'jeffrey'@'localhost';
+create user 'embeddedSystem'@'localhost' identified by '123456';
+grant all on ex1.* TO 'embeddedSystem'@'localhost';
 ./node_module/.bin/sequelize db:migrate
+create user 'marry'@'localhost' identified by 'abcd2345';
+use XXX; //XXX is databases name;
+show databases;
+show tables;
+select * from OOO;//OO is table name;
+truncate database XXX; 
