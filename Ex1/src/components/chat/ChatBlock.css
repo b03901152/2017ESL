@@ -75,3 +75,7 @@
 .ChatBlock .hide {
   display: none;
 }
+
+.ChatBlock .glyphicon-plus:hover {
+  background: rgb( 240, 240, 240 );
+}

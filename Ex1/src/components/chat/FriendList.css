@@ -26,3 +26,7 @@
 .FriendList .chatting { 
 	background: rgb( 230, 230, 230 );
 }
+
+.FriendListContainer .selector:hover {
+	background: rgb( 240, 240, 240 );
+}

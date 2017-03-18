@@ -32,6 +32,7 @@ class App extends Component {
               getChat = { this.props.getChat }
               username = { this.props.username }
               loadFriend = { this.props.loadFriend }
+              groupID = { this.props.friendList[ this.props.chatIdx ].groupID }
             />
           </div>
           <div className = "col-xs-4">

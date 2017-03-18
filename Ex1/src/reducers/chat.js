@@ -36,7 +36,7 @@ const defaultMsg4 = new Message(
   'default isread' );
 
 const DF = {
-  name: 'action.name',
+  name: 'Not fetch success!!',
   msgs: [ defaultMsg ],
   groupID: 1000,
 };
@@ -87,7 +87,7 @@ const chat = ( state = preState, action ) => {
         {
           friendList[ FLidx ].msgs.push( {
             author: action.msg.name,
-            isread: false,
+            isread: true,
             sentDate: action.msg.sentDate,
             msg: [ action.msg.type, action.msg.text ],
           } );

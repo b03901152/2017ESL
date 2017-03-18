@@ -98,15 +98,15 @@ class App extends Component {
   }
 
   render() {
-    return ( 
-      <div>
+    return (
+      <div className = "FriendListContainer">
         { this.renderOption() }
         <div className = 'row' >
-          <div className = 'col-xs-3' onClick = { () => this.setState( { option: 'chat' } ) }>chat</div>
-          <div className = 'col-xs-3' onClick = { () => this.setState( { option: 'people' } ) }>people</div>
-          <div className = 'col-xs-3' onClick = { () => this.setState( { option: 'group' } ) }>group</div>
-          <div className = 'col-xs-3' onClick = { () => this.setState( { option: 'addFriend' } ) }>addFriend</div>
-        </div>  
+          <div className = 'col-xs-3 selector' onClick = { () => this.setState( { option: 'chat' } ) }>chat</div>
+          <div className = 'col-xs-3 selector' onClick = { () => this.setState( { option: 'people' } ) }>people</div>
+          <div className = 'col-xs-3 selector' onClick = { () => this.setState( { option: 'group' } ) }>group</div>
+          <div className = 'col-xs-3 selector' onClick = { () => this.setState( { option: 'addFriend' } ) }>addFriend</div>
+        </div>
       </div>
  );
   }

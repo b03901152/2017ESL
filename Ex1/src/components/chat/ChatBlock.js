@@ -10,6 +10,7 @@ class App extends Component {
     this.state = {
       intitialized: false,
       showModal: false,
+      addFriendToGroupHint: '',
     };
     socket.on( 'getChat', msg => this.props.getChat( msg ) );
   }
@@ -116,14 +117,46 @@ class App extends Component {
     );
   };
 
+  addFriendToGroup = friendName => {
+    console.log( 'addFriendToGroup', friendName);
+    fetch( '/addFriendToGroup', {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify( { friendName, groupID: this.props.groupID } ),
+      credentials: 'same-origin',
+    } )
+    .then( res => res.json() )
+    .then( res => {
+      console.log( 'addFriendToGroup', res );
+      if ( res.status )
+        this.setState( { addFriendToGroupHint: ( 'add ' + this.friendName.value.trim() + ' success' ) } );
+      else
+        this.setState( { addFriendToGroupHint: ( 'add ' + this.friendName.value.trim() + ' fail' ) } );
+
+    } );
+  }
+
   close = () => this.setState( { showModal: false} );
 
   model = () => ( <Modal show={ this.state.showModal } onHide={ this.close } >
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Add your friend to this chat group:</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h4>Text in a modal</h4>
+          <input type="text" className="form-control"
+            ref = { ref => this.friendName = ref }
+            onKeyPress = { e => {
+                if ( e.key === 'Enter' && this.friendName.value.trim() ) {
+                  this.addFriendToGroup( this.friendName.value );
+                  this.input.value = '';
+                }
+              }
+            }
+            placeholder = 'Please enter friend name'/>
+            <div> { this.state.addFriendToGroupHint } </div>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.close}>Close</Button>

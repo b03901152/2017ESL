@@ -72,6 +72,20 @@ const returnRouter = function ( io ) {
 
    } );
 
+  router.post( '/addFriendToGroup', async ( req, res ) => {
+    const { friendName, groupID } = req.body;
+    // console.log( 'addFriendToGroup', req.body, friend );
+    const friend = await User.findOne( { where: { name: friendName } } );
+    // console.log( 'addFriendToGroup', req.body, friend.id );
+    if ( friend ) {
+      await UserGroup.create( { userID: friend.id, groupID } );
+      // console.log('addFriendToGroup success');
+      res.json( { status: true } );
+      return;
+    }
+    res.json( { status: false } );
+  } );
+
   router.post( '/setChat', async ( req, res ) => {
     // console.log( '/setChat', req.body );
     // console.log( 'req.session.loggedInUserId', req.session.loggedInUserId );
@@ -121,19 +135,14 @@ const returnRouter = function ( io ) {
     const groups = await UserGroup.all( { where: { userId: id } } );
     // console.log( 'groups Len:', groups.length );
     if ( groups.length === 0 ) {
-      const group = await ChatGroup.create( { } );
-      const UG = { userID: req.session.loggedInUserId, groupID: group.id };
-      // console.log( 'UG:', UG );
-      await UserGroup.create( { 
-        userID: req.session.loggedInUserId, 
-        groupID:group.id } );
       res.json( {
-      friendList: [ {
-        groupID: group.id,
+        friendList: [ {
+        groupID: 0,
         name: 'system',
         msgs: [ defaultMsg ],
-      } ],
-    } );
+        } ],
+      } );
+      return;
     } else {
       let friendList = [];
       for ( let idx = 0; idx < groups.length; idx++ )
@@ -164,7 +173,7 @@ const returnRouter = function ( io ) {
         const msgs = [];
         for ( let idx = 0; idx < msgsInDB.length; idx += 1 ) {
           const v = msgsInDB[ idx ];
-          const author = await User.findById( v.senderUserId )
+          const author = await User.findById( v.senderUserId );
           // console.log( author.name, v.type, v.text , v.createdAt );
           msgs.push( {
                     author: author.name,

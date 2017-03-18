@@ -78,8 +78,7 @@ authRouter.post( '/signup', async ( req, res ) => {
     } );
 
     if ( check_user_name || check_user_email ) {
-      res.json( { status: false } );
-      return;
+      return res.json( { status: false } );
     }
     const user = await User.create( {
       name,
@@ -123,7 +122,7 @@ authRouter.post( '/login', async ( req, res ) => {
 authRouter.post( '/logout', ( req, res ) => {
   req.session.destroy();
   console.log( 'logout' );
-  res.json( {
+  return res.json( {
     status: true,
   } );
 } );
