@@ -1,7 +1,7 @@
 api:
-	api.js:
-	auth.js:
-	chat.js:
+	api.js: 
+	auth.js: handle request sent from Login & Signup
+	chat.js: handle request sent from chat/
 src:
 	actions: define all actions
 	components:
