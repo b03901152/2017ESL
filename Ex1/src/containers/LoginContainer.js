@@ -6,9 +6,10 @@ const mapStateToProps = state => ( {
   err: state.login.err,
 } );
 
-const setUser = username => ( {
+const setUser = ( username, profilePath ) => ( {
   type: 'SET_USER',
   username,
+  profilePath,
 } );
 
 const loadFriend = friendList => {

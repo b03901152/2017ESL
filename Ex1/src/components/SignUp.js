@@ -61,7 +61,7 @@ class SignUp extends Component {
     return (
       <div className="signup">
         <div className="jumbotron">
-          <h1>Avalon <small>Sign Up</small></h1>
+          <h1>Chat room <small>Sign Up</small></h1>
         </div>
         <div className="col-xs-12 col-sm-6">
           <form>

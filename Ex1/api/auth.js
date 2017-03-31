@@ -37,7 +37,7 @@ let defaultFL = [
 
 authRouter.get( '/profile', async ( req, res ) => {
   if ( req.session.loggedInUserId ) {
-    const user = await User.findById( id: req.session.loggedInUserId );
+    const user = await User.findById( req.session.loggedInUserId );
     if ( user ) {
       const { username, email, rest } = user;
       return res.json( { username, email, rest } );
@@ -45,14 +45,16 @@ authRouter.get( '/profile', async ( req, res ) => {
   }
 } );
 
-authRouter.post( '/check', ( req, res ) => {
+authRouter.post( '/check', async ( req, res ) => {
   if ( req.session.loggedInUserId ) {
     const userId = req.session.loggedInUserId;
     const username = req.session.loggedInUserName;
+    const user = await User.findById(userId);
     return res.json( {
       status: true,
       userId,
       username,
+      profilePath: user.profilePath,
     } );
   }
   res.json( {
@@ -107,9 +109,11 @@ authRouter.post( '/login', async ( req, res ) => {
     if ( user && ( password === user.password ) ) {
       req.session.loggedInUserId = user.id;
       req.session.loggedInUserName = user.name;
+      console.log("user.profilePath", user.profilePath);
       res.json( { 
         status: true,
         username: user.name,
+        profilePath: user.profilePath,
       } );
     };
     res.json( { status: false } );

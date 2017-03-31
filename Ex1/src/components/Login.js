@@ -23,7 +23,7 @@ class Login extends Component {
       .then( ( res ) => {
         if ( res.status ) {
           this.props.setLoc( 'chat' );
-          this.props.setUser( res.username );
+          this.props.setUser( res.username, res.profilePath );
         }
       } );
   }
@@ -53,7 +53,7 @@ class Login extends Component {
         if ( res.status ) {
           this.props.setLoc( 'chat' );
           console.log( 'login res', res );
-          this.props.setUser( res.username );
+          this.props.setUser( res.username, res.profilePath );
         }
       } );
   };

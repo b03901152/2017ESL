@@ -25,21 +25,25 @@ class App extends Component {
               loadFriend = { this.props.loadFriend }
               />
           </div>
-          <div className = "col-xs-4" >
-            { console.log( 'this.props in App', this.props ) }
-            <ChatBlock msg = { this.props.friendList[ this.props.chatIdx ].msgs } 
-              setChat = { this.props.setChat }
-              getChat = { this.props.getChat }
-              username = { this.props.username }
-              loadFriend = { this.props.loadFriend }
-              groupID = { this.props.friendList[ this.props.chatIdx ].groupID }
-            />
+          <div className = "col-xs-8" >
+            <div className="row">
+              <Config/>
+            </div>
+            <div className="row">
+              { console.log( 'this.props in App', this.props ) }
+              <ChatBlock msg = { this.props.friendList[ this.props.chatIdx ].msgs } 
+                setChat = { this.props.setChat }
+                getChat = { this.props.getChat }
+                username = { this.props.username }
+                loadFriend = { this.props.loadFriend }
+                groupID = { this.props.friendList[ this.props.chatIdx ].groupID }
+                sort = { this.props.sort }
+                isread = { this.props.isread }
+                />
+            </div>
           </div>
-          <div className = "col-xs-4">
-            <Config/>
-          </div>
-        </div>
-      </div> );
+      </div> 
+    </div> );
   }
 }
 

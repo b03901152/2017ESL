@@ -23,6 +23,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      read: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

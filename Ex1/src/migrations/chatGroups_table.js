@@ -7,6 +7,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         autoIncrement: true,
       },
+      groupName: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

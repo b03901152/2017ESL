@@ -6,6 +6,10 @@ module.exports = ( sequelize, DataTypes ) => {
       type: DataTypes.INTEGER,
       autoIncrement: true,
     },
+    groupName: {
+      allowNull: true,
+      type: DataTypes.STRING,
+    },
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE,

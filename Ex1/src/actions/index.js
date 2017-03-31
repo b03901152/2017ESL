@@ -12,4 +12,3 @@ export const setLoc = loc => ( {
   type: 'SET_LOC',
   loc
 } );
-

@@ -16,12 +16,20 @@ class App extends Component {
   }
 
   isread = isread => {
-    if ( isread ) 
-      return <div className = 'isread' > Read </div>
+    if ( isread === 'read' )
+      return <div className = 'isread' > Read </div>;
+    else if ( isread === 'all' )
+      return <div className = 'isread' > { 'All read' } </div>;
+    else if ( isread )
+      return <div className = 'isread' > { isread + ' read' } </div>;
+    return;
+
+  }
+
+  getLastReadTime() {
   }
 
   componentWillMount() {
-    
   }
 
   componentWillReceiveProps( next ) {
@@ -62,7 +70,26 @@ class App extends Component {
 
   };
 
+  isread = isread => {
+    if ( !isread )
+      return
+    else if ( isread === 'all' )
+      return "All read ";
+    else if ( !isNaN( Number( isread ) ) )
+      return this.timeUI( isread ) + ' read ';
+    else
+      return 'read';
+  }
+
+  timeUI = date => {
+    if ( !date )
+      return 'err';
+    date = new Date( date );
+    return date.getHours() + ':' + date.getMinutes();
+  }
+
   chatting = () => this.props.msg.map( ( msg, idx ) => {
+    console.log("msgggg", msg);
     if ( msg.author === this.props.username )
       return (
         <div key = { idx } >
@@ -75,7 +102,9 @@ class App extends Component {
               </div>
               <div className = 'myInfo' >
                 { this.isread( msg.isread ) }
-                <div className = 'sentDate' > { msg.sentDate.toLocaleString() } </div>
+                <div className = 'sentDate' >
+                  { this.timeUI( msg.sentDate ) }
+                </div>
               </div>
             </div>
           }
@@ -85,7 +114,7 @@ class App extends Component {
       return (
         <div key = { idx } >
           {
-            <div className = 'msg' >
+            <div className = 'msg row' >
               <div className = 'author' > { msg.author } </div>
               <div className = 'content'>
                 <div className = 'insideMsg'>
@@ -94,8 +123,9 @@ class App extends Component {
                   </div>
                 </div>
                 <div className = 'info' >
-                  { this.isread( msg.isread ) }
-                  <div className = 'sentDate' > { msg.sentDate.toLocaleString() } </div>
+                  <div className = 'sentDate' > {
+                    this.timeUI( msg.sentDate )
+                  } </div>
                 </div>
               </div>
             </div>
@@ -117,81 +147,30 @@ class App extends Component {
     );
   };
 
-  addFriendToGroup = friendName => {
-    console.log( 'addFriendToGroup', friendName);
-    fetch( '/addFriendToGroup', {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-      body: JSON.stringify( { friendName, groupID: this.props.groupID } ),
-      credentials: 'same-origin',
-    } )
-    .then( res => res.json() )
-    .then( res => {
-      console.log( 'addFriendToGroup', res );
-      if ( res.status )
-        this.setState( { addFriendToGroupHint: ( 'add ' + this.friendName.value.trim() + ' success' ) } );
-      else
-        this.setState( { addFriendToGroupHint: ( 'add ' + this.friendName.value.trim() + ' fail' ) } );
 
-    } );
-  }
-
-  close = () => this.setState( { showModal: false} );
-
-  model = () => ( <Modal show={ this.state.showModal } onHide={ this.close } >
-        <Modal.Header closeButton>
-          <Modal.Title>Add your friend to this chat group:</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <input type="text" className="form-control"
-            ref = { ref => this.friendName = ref }
-            onKeyPress = { e => {
-                if ( e.key === 'Enter' && this.friendName.value.trim() ) {
-                  this.addFriendToGroup( this.friendName.value );
-                  this.input.value = '';
-                }
-              }
-            }
-            placeholder = 'Please enter friend name'/>
-            <div> { this.state.addFriendToGroupHint } </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.close}>Close</Button>
-        </Modal.Footer>
-      </Modal> );
 
   render() {
     return ( <div className = 'ChatBlock' >
-      <div> username: { this.props.username } </div>
-      <span className="glyphicon glyphicon-plus" 
-      onClick = { () => this.setState( { showModal: true } ) } ></span>
-      { this.model() }
       <div className="chatting" 
       ref = { ref => this.chattingBlock = ref }>
         { this.chatting() }
+      </div>
+      <div className="row icons">
+        <label htmlFor="uploadImage" className = "glyphicon icon glyphicon-picture"></label>
+        <label htmlFor="uploadVedio" className = "glyphicon icon glyphicon-facetime-video"></label>
+        <label htmlFor="uploadAudio" className = "glyphicon icon glyphicon-headphones"></label>
       </div>
         <input type="text" className="form-control"
           ref = { ref => this.input = ref }
           onKeyPress = { async e => {
               if ( e.key === 'Enter' && this.input.value.trim() ) {
+                this.props.sort();
                 this.props.setChat( [ 'text', this.input.value.trim() ] );
                 this.input.value = '';
               }
             }
           }
           placeholder = 'Please enter a message'/>
-        <div>
-          <label htmlFor="uploadImage">uploadImage</label>
-        </div>
-        <div>
-          <label htmlFor="uploadVedio">uploadVedio</label>
-        </div>
-        <div>
-          <label htmlFor="uploadAudio">uploadAudio</label>
-        </div>
         <input type="file" className="form-control" id={"uploadImage"}
           className = { "hide" } 
           ref = { ref => this.vedio = ref }
