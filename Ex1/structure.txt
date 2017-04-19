@@ -1,0 +1,29 @@
+api:
+	api.js: 
+	auth.js: handle request sent from Login & Signup
+	chat.js: handle request sent from chat/
+src:
+	actions: define all actions
+	components:
+		chat/App( get props from containers/ChatContainer ): decide which component should be sent
+			App.js: export all component.
+			ChatBlock.js: chatting history.
+			FrindList.js: show friend list and the latest message. Users can add friend and choose who they want to talk to.
+			Config.js: I will delete it later
+		Login( get props from containers/LoginContainer ):
+		Signup( get props from containers/SignupContainer ):
+		Profile: not done!
+	containers: combine props and components.
+
+	
+	migrates: build databases table by sequlizejs
+		
+	models: build databases object model
+	
+	reducers: handling actions sent from components.
+		chat.js: handling actions sent from chat/App components.
+		login.js: handling actions sent from Login components.
+		page.js: handling actions sent from App components.
+		signup.js: handling actions sent from SignUp components.
+
+uploads: save upload files.
