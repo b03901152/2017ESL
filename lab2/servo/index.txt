@@ -34,7 +34,7 @@ servo.on('ready', function () {
       // console.log('Position (in range 0-1):', position);
       //  Set servo #1 to position pos.
       servo.move(servo1, position);
-      console.log("reset servo", position);
+
       // Increment by 10% (~18 deg for a normal servo)
       // position += 0.1;
       if (position > 1) {
@@ -54,7 +54,6 @@ var rl = readline.createInterface({
 
 rl.on('line', function(line){
   position = line;
-  console.log("position",position);
     // switch(line.trim()) {
     //     case 'copy':
     //         console.log("复制");
