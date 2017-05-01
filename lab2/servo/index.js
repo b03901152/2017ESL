@@ -14,32 +14,20 @@ var servolib = require('servo-pca9685');
 var servo = servolib.use(tessel.port['A']);
 
 var servo1 = 1; // We have a servo plugged in at position 1
-var position = 1;
+var servo2 = 2; // We have a servo plugged in at position 1
+var position1 = 1;
+var position2 = 1;
 servo.on('ready', function () {
-    //  Target position of the servo between 0 (min) and 1 (max).
-
-  //  Set the minimum and maximum duty cycle for servo 1.
-  //  If the servo doesn't move to its full extent or stalls out
-  //  and gets hot, try tuning these values (0.05 and 0.12).
-  //  Moving them towards each other = less movement range
-  //  Moving them apart = more range, more likely to stall and burn out
   servo.configure(servo1, 0.05, 1, function () {
-/**
- * Created by Administrator on 2015/9/10.
- */
-// 引入readline模块
-
-
-    setInterval(function () {
-      // console.log('Position (in range 0-1):', position);
-      //  Set servo #1 to position pos.
+    setInterval( () => {
       servo.move(servo1, position);
-      console.log("reset servo", position);
-      // Increment by 10% (~18 deg for a normal servo)
-      // position += 0.1;
-      if (position > 1) {
-        position = 0; // Reset servo position
-      }
+      servo.move(servo2, position);
+
+      if (position1 > 1)
+        position1 = 0;
+      if (position2 > 1)
+        position2 = 0;
+
     }, 500); // Every 500 milliseconds
   });
 });
@@ -52,24 +40,46 @@ var rl = readline.createInterface({
     output: process.stdout
 });
 
-rl.on('line', function(line){
+
+rl.on('line', function(key){
   position = line;
-  console.log("position",position);
-    // switch(line.trim()) {
-    //     case 'copy':
-    //         console.log("复制");
-    //         break;
-    //     case 'hello':
-    //         rl.write("Write");
-    //         console.log('world!');
-    //         break;
-    //     case 'close':
-    //         rl.close();
-    //         break;
-    //     default:
-    //         console.log('没有找到命令！');
-    //         break;
-    // }
+  // console.log("position",position);
+    switch(key.trim()) {
+        case 'w': // up rotate
+            position2 += 0.1;
+            // console.log("");
+            break;
+        case 's': // down rotate
+            position2 -= 0.1;
+
+            // rl.write("Write");
+            // console.log('world!');
+            break;
+        case 'a': // left rotate
+            position1 -= 0.1;
+            break;
+        case 'd': // right
+            position1 -= 0.1;
+            break;
+        // case 'a':
+        //     rl.close();
+        //     break;
+        // case 'a':
+        //     rl.close();
+        //     break;
+        // case 'a':
+        //     rl.close();
+        //     break;
+        // case 'a':
+        //     rl.close();
+        //     break;
+        // case 'a':
+        //     rl.close();
+        //     break;
+        default:
+            console.log('没有找到命令！');
+            break;
+    }
 });
 rl.on('close', function() {
     console.log('bye bye');
