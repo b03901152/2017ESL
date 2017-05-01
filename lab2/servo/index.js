@@ -20,11 +20,17 @@ var position2 = 1;
 servo.on('ready', function () {
   servo.configure(servo1, 0.05, 1, function () {
     setInterval( () => {
-      servo.move(servo1, position);
-      servo.move(servo2, position);
+      servo.move(servo1, position1);
 
       if (position1 > 1)
         position1 = 0;
+
+    }, 500); // Every 500 milliseconds
+  });
+  servo.configure(servo2, 0.05, 1, function () {
+    setInterval( () => {
+      servo.move(servo2, position2);
+
       if (position2 > 1)
         position2 = 0;
 
@@ -42,12 +48,11 @@ var rl = readline.createInterface({
 
 
 rl.on('line', function(key){
-  position = line;
+  //position = key;
   // console.log("position",position);
     switch(key.trim()) {
         case 'w': // up rotate
             position2 += 0.1;
-            // console.log("");
             break;
         case 's': // down rotate
             position2 -= 0.1;
@@ -59,7 +64,7 @@ rl.on('line', function(key){
             position1 -= 0.1;
             break;
         case 'd': // right
-            position1 -= 0.1;
+            position1 += 0.1;
             break;
         // case 'a':
         //     rl.close();
