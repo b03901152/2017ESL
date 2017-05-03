@@ -28,14 +28,17 @@ servo.on('ready', function () {
   servo.configure(servo1, 0.05, 0.12, function () {
     setInterval( () => {
       servo.move(servo1, position1);
-      servo.move(servo2, position2);
-      servo.move(servo3, 1-position3);
-      servo.move(servo4, position4);
 
       if (position1 > 1)
         position1 = 1;
       else if( position1 < 0 )
         position1 = 0;
+
+    }, 1); // Every 500 milliseconds
+  });
+  servo.configure(servo2, 0.05, 0.12, function () {
+    setInterval( () => {
+      servo.move(servo2, position2);
 
       if (position2 > 1)
         position2 = 1;
@@ -43,6 +46,18 @@ servo.on('ready', function () {
         position2 = 0;
 
     }, 1); // Every 500 milliseconds
+  });
+  servo.configure(servo3, 0.05, 0.12, function () {
+    setInterval( () => {
+      servo.move(servo3, 1 - position3);
+
+    }, 1);
+  });
+  servo.configure(servo4, 0.05, 0.12, function () {
+    setInterval( () => {
+      servo.move(servo4, position4);
+
+    }, 1);
   });
 
 });
@@ -74,15 +89,15 @@ stdin.on('keypress', function (chunk, key) {
         case 'd': // right
             position1 -= 0.05;
             break;
-        case 'i': // right
+        case 'i': // front
             position3 = 1;
             position4 = 1;
             break;
-        case 'k': // right
+        case 'k': // back
             position3 = 0;
             position4 = 0;
             break;
-        case 'j': // right
+        case 'j': // left
             position3 = 1;
             position4 = 0;
             break;
