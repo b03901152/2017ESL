@@ -34,7 +34,7 @@ servo.on('ready', function () {
       else if( position1 < 0 )
         position1 = 0;
 
-    }, 1); // Every 500 milliseconds
+    }, 10); // Every 500 milliseconds
   });
   servo.configure(servo2, 0.05, 0.12, function () {
     setInterval( () => {
@@ -45,19 +45,19 @@ servo.on('ready', function () {
       else if( position2 < 0 )
         position2 = 0;
 
-    }, 1); // Every 500 milliseconds
+    }, 10); // Every 500 milliseconds
   });
   servo.configure(servo3, 0.05, 0.12, function () {
     setInterval( () => {
       servo.move(servo3, 1 - position3);
 
-    }, 1);
+    }, 10);
   });
   servo.configure(servo4, 0.05, 0.12, function () {
     setInterval( () => {
       servo.move(servo4, position4);
 
-    }, 1);
+    }, 10);
   });
 
 });
