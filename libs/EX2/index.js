@@ -28,36 +28,21 @@ servo.on('ready', function () {
   servo.configure(servo1, 0.05, 0.12, function () {
     setInterval( () => {
       servo.move(servo1, position1);
+      servo.move(servo2, position2);
+      servo.move(servo3, 1-position3);
+      servo.move(servo4, position4);
 
       if (position1 > 1)
         position1 = 1;
       else if( position1 < 0 )
         position1 = 0;
 
-    }, 10); // Every 500 milliseconds
-  });
-  servo.configure(servo2, 0.05, 0.12, function () {
-    setInterval( () => {
-      servo.move(servo2, position2);
-
       if (position2 > 1)
         position2 = 1;
       else if( position2 < 0 )
         position2 = 0;
 
-    }, 10); // Every 500 milliseconds
-  });
-  servo.configure(servo3, 0.05, 0.12, function () {
-    setInterval( () => {
-      servo.move(servo3, 1 - position3);
-
-    }, 10);
-  });
-  servo.configure(servo4, 0.05, 0.12, function () {
-    setInterval( () => {
-      servo.move(servo4, position4);
-
-    }, 10);
+    }, 1); // Every 500 milliseconds
   });
 
 });
@@ -89,15 +74,15 @@ stdin.on('keypress', function (chunk, key) {
         case 'd': // right
             position1 -= 0.05;
             break;
-        case 'i': // front
+        case 'i': // right
             position3 = 1;
             position4 = 1;
             break;
-        case 'k': // back
+        case 'k': // right
             position3 = 0;
             position4 = 0;
             break;
-        case 'j': // left
+        case 'j': // right
             position3 = 1;
             position4 = 0;
             break;
@@ -111,46 +96,4 @@ stdin.on('keypress', function (chunk, key) {
 
   }
   process.stdout.write('Get Chunk: ' + chunk + '\n');
-});
-
-
-const av = require("tessel-av");
-const ip = require("ip");
-const os = require("os");
-const http = require("http");
-const port = 8888;
-
-const camera = new av.Camera({
-  fps: 3000,
-  // width: 1280,
-  // height: 720,
-  width: 800,
-  height: 600,
-});
-
-const server = http.createServer((request, response) => {
-
-  if (/frame/.test(request.url)) {
-    console.log("asking for image...");
-
-    response.writeHead(200, { "Content-Type": "image/jpeg" });
-    camera.capture().pipe(response);
-  } else {
-    console.log("asking for web page...");
-    response.writeHead(200, { "Content-Type": "text/html" });
-    response.end(`
-      <!doctype html>
-      <html>
-        <head>
-          <title>${os.hostname()}</title>
-        </head>
-        <body>
-          <img src="/frame">
-        </body>
-      </html>
-    `);
-  }
-}).listen(port, () => {
-  console.log(`http://${ip.address()}:${port}`);
-  console.log(`<img src="${camera.url}">`);
 });

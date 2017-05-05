@@ -1,0 +1,32 @@
+p
+	{
+		display: inline-block;
+		/*background: red;*/
+	}
+	.delete
+	{
+		float:right;
+	}
+	.active
+	{
+		width:400px;
+	}
+    .completed
+    {
+	    width:400px;
+	    background: gray;
+	    text-decoration: line-through;
+	    /*font-size: 300px;*/
+    }
+	.todoitem:hover
+	{
+		background: skyblue
+	}
+	.todoitem
+	{
+		width:400px;
+	}
+	.display
+	{
+		margin-right: 20px;
+	}
