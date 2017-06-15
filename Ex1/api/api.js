@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import path from 'path';
+// const path = reqire("path");
 import models from '../src/models';
 import chat from './chat';
 import express from 'express';
@@ -11,7 +12,7 @@ const returnRouter = ( io ) => {
   router.use( express.static( 'uploads' ) );
   router.use( chat( io ) );
   router.get( '*', ( req, res ) => {
-    res.sendFile( path.join( __dirname, '../index.html' ) );
+  res.sendFile( path.join( __dirname, '../index.html' ) );
   } );
 
   return router;
