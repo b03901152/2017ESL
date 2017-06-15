@@ -6,7 +6,7 @@ import time
 import RPi.GPIO as GPIO
 import Adafruit_CharLCD as LCD
 
-# pin setup
+# pin setup GPIO
 GPIO_servo1 = 18;
 GPIO_servo2 = 23;
 GPIO_servo3 = 24;
@@ -17,6 +17,9 @@ lcd_d5 = 19
 lcd_d6 = 26
 lcd_d7 = 21
 lcd_backlight = 2
+GPIO_input1 = 12
+GPIO_input2 = 16
+GPIO_input3 = 20
 
 # servo1
 servo1_anti = 'pigs s {} 1000'.format(GPIO_servo1)
@@ -44,46 +47,61 @@ lcd = LCD.Adafruit_CharLCD(lcd_rs,
 			   lcd_rows,
 			   lcd_backlight)
 
+
 lcd.message('La Ping\nNo GG!!!')
 # Wait 5 seconds
-time.sleep(5)
+time.sleep(3)
 lcd.clear()
 lcd.message('Chou Ping\nLa Mei Zi!!!')
 
-time.sleep(5)
+time.sleep(3)
 lcd.clear()
 
-GPIO_input1 = 17
-GPIO_input2 = 17
-GPIO_input3 = 17
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(GPIO_input1, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 GPIO.setup(GPIO_input2, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 GPIO.setup(GPIO_input3, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 
-while True:
-    ins1 = int(input("servo1: "))
-    ins2 = int(input("servo2: "))
-    ins3 = int(input("servo3: "))
-    value1 = GPIO.input(GPIO_input1)
-    if   ins1 == 1:
-        os.popen(servo1_anti)
-    elif ins1 == 2:
-        os.popen(servo1_stop)
-    elif ins1 == 3:
-        os.popen(servo1_norm)
-    if   ins2 == 1:
-        os.popen(servo2_anti)
-    elif ins2 == 2:
-        os.popen(servo2_stop)
-    elif ins2 == 3:
-        os.popen(servo2_norm)
-    if   ins3 == 1:
-        os.popen(servo3_anti)
-    elif ins3 == 2:
-        os.popen(servo3_stop)
-    elif ins3 == 3:
-        os.popen(servo3_norm)
+cur1 = GPIO.input(GPIO_input1)
+cur2 = GPIO.input(GPIO_input2)
+cur3 = GPIO.input(GPIO_input3)
+prev1 = cur1
+prev2 = cur2
+prev3 = cur3
 
+while True:
+    cur1 = GPIO.input(GPIO_input1)
+    cur2 = GPIO.input(GPIO_input2)
+    cur3 = GPIO.input(GPIO_input3)
+    if cur1 != prev1:
+        lcd.message('Item 1!\nLaPing noGG')
+        time.sleep(3)
+        lcd.clear()
+        os.popen(servo1_anti)
+        time.sleep(5)
+        os.popen(servo1_stop)
+    if cur2 != prev2:
+        lcd.message('Item 2!\nLaPing noGG')
+        time.sleep(3)
+        lcd.clear()
+        os.popen(servo2_anti)
+        time.sleep(5)
+        os.popen(servo2_stop)
+    if cur3 != prev3:
+        lcd.message('Item 3!\nLaPing noGG')
+        time.sleep(3)
+        lcd.clear()
+        os.popen(servo3_anti)
+        time.sleep(5)
+        os.popen(servo3_stop)
+    os.popen(servo1_stop)
+    os.popen(servo2_stop)
+    os.popen(servo3_stop)
+    prev1 = cur1
+    prev2 = cur2
+    prev3 = cur3
+    time.sleep(2)
+
+GPIO.cleanup()
 
 
