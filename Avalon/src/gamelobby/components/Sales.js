@@ -81,13 +81,14 @@ class Sales extends Component {
             onClick = { () => {
               const productName = '7up';
               const tradeTime = 'Thu Jun 11 2017 20:50:15 GMT+0800 (CST)';
+              const trade = { productName, tradeTime };
               fetch( '/setTrade', {
                 headers: {
                   Accept: 'application/json',
                   'Content-Type': 'application/json',
                 },
                 method: 'POST',
-                body: JSON.stringify( user ),
+                body: JSON.stringify( trade ),
                 credentials: 'same-origin',
               } )
               .then( res => res.json() )
@@ -96,9 +97,6 @@ class Sales extends Component {
                 if ( res.status )
                   this.props.changeLoc( 'gamelobby' );
               } );
-
-
-
               socket.emit('setTrade', { productName, tradeTime } );
             } } > TEST IO SOCKET
           </button>
