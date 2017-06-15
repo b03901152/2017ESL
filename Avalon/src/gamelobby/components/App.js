@@ -33,7 +33,7 @@ class App extends Component {
   }
 
   logout = () => {
-    fetch( '/auth/logout', {
+    fetch( '/auth/logout/', {
       method: 'post',
       headers: {
         'content-type': 'application/json'

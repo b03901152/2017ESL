@@ -77,29 +77,6 @@ class Sales extends Component {
           <button type="button" className="btn btn-default"
             onClick = { () => this.props.back( 'menu' ) } > Back
           </button>
-          <button type="button" className="btn btn-default"
-            onClick = { () => {
-              const productName = '7up';
-              const tradeTime = 'Thu Jun 11 2017 20:50:15 GMT+0800 (CST)';
-              const trade = { productName, tradeTime };
-              fetch( '/setTrade', {
-                headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
-                },
-                method: 'POST',
-                body: JSON.stringify( trade ),
-                credentials: 'same-origin',
-              } )
-              .then( res => res.json() )
-              .then( res => {
-                console.log(res);
-                if ( res.status )
-                  this.props.changeLoc( 'gamelobby' );
-              } );
-              // socket.emit('setTrade', { productName, tradeTime } );
-            } } > TEST IO SOCKET
-          </button>
         </div>
     );
   }

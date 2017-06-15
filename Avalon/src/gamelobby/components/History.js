@@ -20,7 +20,7 @@ class History extends Component {
       timeScale: 1, // 1 mean hour
       rawDatas: [],
       datas: [
-        [ 10000, 3, 5, 8, 2, 0, 1, 2, 0 ,4, 7, 9, 10 ,20],
+        [ 10000, 3, 5, 8, 2, 0, 1, 2, 0 ,4, 7, 9, 10 ,0],
         [ -2, -5, 0, -3, -1, 0, -1, 3, 4, 7, 2, 5 ],
         [ -1, -3, 8, 3, 1, 0, 2, 2, 6, -2, -4, -5 ]
       ],
@@ -32,7 +32,7 @@ class History extends Component {
                     pointStrokeColor: "#fff",
                     pointHighlightFill: "#fff",
                     pointHighlightStroke: "rgba(220,220,220,1)",
-                    data: [ 1, 3, 5, 8, 2, 0, 1, 2, 0 ,4, 7, 9, 10 ,20]
+                    data: [ 1, 3, 5, 8, 2, 0, 1, 2, 0 ,4, 7, 9, 10 ,1]
                 },
                 {
                     label: "7up",
@@ -64,6 +64,13 @@ class History extends Component {
           console.log('res.datas:',res.datas);
           this.setState( { rawDatas: res.datas } );
       } );
+    } );
+    fetch( '/getCommodityDatas' )
+      .then( res => res.json() )
+      .then( res => {
+        console.log('res.datas:',res.datas);
+        this.setState( { rawDatas: res.datas } );
+        this.setTimeScale(1);
     } );
   }
 
@@ -141,6 +148,9 @@ class History extends Component {
       datas[1].push(0);
       datas[2].push(0);
     }
+    console.log(this.state.rawDatas);
+    if (!this.state.rawDatas.time)
+      return;
     for ( let i = 0; i < 3; ++i ) {
       this.state.rawDatas.time[i].forEach( t => {
         console.log(t);

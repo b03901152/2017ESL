@@ -49,10 +49,16 @@ class Login extends Component {
   render() {
     return (
       <div className="login jumbotron">
-        <h1>Health Keeper</h1>
+        <h1>Vending machine online</h1>
         <form>
-          <h2>Login with RFID</h2>
+          <h2>Login</h2>
           <div id="wrongPassword"/>
+          <div className="form-group" id="passwordDiv">
+            <label htmlFor="password" />
+            <input type="password" id="password" className="form-control" placeholder="Username"
+              value={ this.state.username }
+              onChange={ ( e ) => { this.setState( { username: e.target.value } ); } }/>
+          </div>
           <div className="form-group" id="passwordDiv">
             <label htmlFor="password" />
             <input type="password" id="password" className="form-control" placeholder="Password"

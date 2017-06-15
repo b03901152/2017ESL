@@ -47,7 +47,21 @@ class Deposit extends Component {
               <div className="form-group">
                 <div className = { 'depositLabel' } > Your Surplus: { this.state.surplus } </div>
                 <span className = { 'depositLabel' } > How much do you want to deposit? ( '#' to zero ) </span>
-                <input className="form-control" style = {{ margin: '1em' }} placeholder="Enter email" value = { this.state.depositValue }/>
+                <input className="form-control" style = {{ margin: '1em' }} 
+                placeholder="Enter email" value = { this.state.depositValue }
+                onChange = { v => {
+                  this.setState({
+                    depositValue:v.target.value,
+                   });
+                }}
+                onKeyPress = {
+                  e => {
+                    if (e.key != 'Enter')
+                      return;
+                    this.setState({surplus: parseInt(this.state.surplus) + parseInt(this.state.depositValue) });
+                  }
+                }
+                />
                 <button className = 'btn btn-primary' style = {{ margin: '1em' }} onClick = { () => this.deposit() }>Submit</button>
                 <button className = 'btn btn-secondary' style = {{ margin: '1em' }} onClick = { () => this.props.back() }>Back</button>
               </div>

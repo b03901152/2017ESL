@@ -94,7 +94,7 @@ class SignUp extends Component {
                 onChange={ ( e ) => { this.setState( { email: e.target.value } ); } }/>
             </div>
             <div className="form-group">
-              <label htmlFor="password">Use RFID</label>
+              <label htmlFor="password">password</label>
               <input type="password" id="password" className="form-control" placeholder="Password"
                 value={ this.state.password }
                 onChange={ ( e ) => { this.setState( { password: e.target.value } ); } }/>
