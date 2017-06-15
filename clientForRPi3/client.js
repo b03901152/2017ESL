@@ -1,4 +1,12 @@
 var fetch = require('isomorphic-fetch');
+var spawn = require( 'child_process' );
+
+
+spawn.exec('python3 test.py', 
+	function(err, stdout, stderr){
+	console.log('stdout: ' + stdout);
+	console.log('stderr: ' + stderr);
+});
 
 var trade = {
         productName: 'coke',
