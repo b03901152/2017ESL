@@ -97,7 +97,7 @@ class Sales extends Component {
                 if ( res.status )
                   this.props.changeLoc( 'gamelobby' );
               } );
-              socket.emit('setTrade', { productName, tradeTime } );
+              // socket.emit('setTrade', { productName, tradeTime } );
             } } > TEST IO SOCKET
           </button>
         </div>
