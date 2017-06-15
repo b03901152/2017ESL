@@ -48,13 +48,13 @@ lcd = LCD.Adafruit_CharLCD(lcd_rs,
 			   lcd_backlight)
 
 
-lcd.message('La Ping\nNo GG!!!')
+lcd.message('Welcome to LaPing\nFuck you asshole')
 # Wait 5 seconds
-time.sleep(3)
+time.sleep(4)
 lcd.clear()
-lcd.message('Chou Ping\nLa Mei Zi!!!')
+lcd.message('c======3\n--- c=======3')
 
-time.sleep(3)
+time.sleep(4)
 lcd.clear()
 
 GPIO.setmode(GPIO.BCM)
@@ -65,43 +65,61 @@ GPIO.setup(GPIO_input3, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 cur1 = GPIO.input(GPIO_input1)
 cur2 = GPIO.input(GPIO_input2)
 cur3 = GPIO.input(GPIO_input3)
-prev1 = cur1
-prev2 = cur2
-prev3 = cur3
-
 while True:
     cur1 = GPIO.input(GPIO_input1)
     cur2 = GPIO.input(GPIO_input2)
     cur3 = GPIO.input(GPIO_input3)
-    if cur1 != prev1:
+   # print(cur1)
+   # print(cur2)
+   # print(cur3)
+   # in1 = int(input('type1: '))
+   # in2 = int(input('type2: '))
+   # in3 = int(input('type3: '))
+   # if in1 == 1:
+   #     os.popen(servo1_anti)
+   # elif in1 == 2:
+   #     os.popen(servo1_stop)
+   # elif in1 == 3:
+   #     os.popen(servo1_norm)
+   # if in2 == 1:
+   #     os.popen(servo2_anti)
+   # elif in2 == 2:
+   #     os.popen(servo2_stop)
+   # elif in2 == 3:
+   #     os.popen(servo2_norm)
+   # if in3 == 1:
+   #     os.popen(servo3_anti)
+   # elif in3 == 2:
+   #     os.popen(servo3_stop)
+   # elif in3 == 3:
+   #     os.popen(servo3_norm)
+    if cur1 == 1:
+        print(1)
         lcd.message('Item 1!\nLaPing noGG')
-        time.sleep(3)
+        time.sleep(2)
         lcd.clear()
-        os.popen(servo1_anti)
-        time.sleep(5)
+        os.popen(servo1_norm)
+        time.sleep(4)
         os.popen(servo1_stop)
-    if cur2 != prev2:
+    if cur2 == 1:
+        print(2)
         lcd.message('Item 2!\nLaPing noGG')
-        time.sleep(3)
+        time.sleep(2)
         lcd.clear()
         os.popen(servo2_anti)
-        time.sleep(5)
+        time.sleep(4)
         os.popen(servo2_stop)
-    if cur3 != prev3:
+    if cur3 == 1:
+        print(3)
         lcd.message('Item 3!\nLaPing noGG')
-        time.sleep(3)
+        time.sleep(2)
         lcd.clear()
         os.popen(servo3_anti)
-        time.sleep(5)
+        time.sleep(4)
         os.popen(servo3_stop)
     os.popen(servo1_stop)
     os.popen(servo2_stop)
     os.popen(servo3_stop)
-    prev1 = cur1
-    prev2 = cur2
-    prev3 = cur3
     time.sleep(2)
 
 GPIO.cleanup()
-
-
