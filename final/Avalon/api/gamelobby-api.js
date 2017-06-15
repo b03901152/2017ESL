@@ -15,8 +15,7 @@ let datas = {
     "Thu Jun 15 2017 20:50:15 GMT+0800 (CST)",
   ], [
     "Thu Jun 15 2017 20:50:15 GMT+0800 (CST)",
-    "Thu Jun 13 2017 20:50:15 GMT+0800 (CST)",
-    "Thu Jun 13 20117 20:50:15 GMT+0800 (CST)"
+    "Thu Jun 13 2017 20:50:15 GMT+0800 (CST)"
   ] ],
 };
 

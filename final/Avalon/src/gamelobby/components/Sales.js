@@ -39,11 +39,13 @@ class Sales extends Component {
     }
     let counter = 0;
     trades = trades.sort( ( i ,j ) => {
-      // console.log(i[1]);
-      // console.log(j[1]);
-      // console.log(new Date( i[ 1 ] ) > new Date( j[ 1 ] ) );
-      // console.log('\n'); 
-      return new Date( i[ 1 ] ) > new Date( j[ 1 ] );
+      console.log(i[1]);
+      console.log(j[1]);
+      console.log( new Date( i[ 1 ] ).getTime() );
+      console.log( new Date( j[ 1 ] ).getTime() );
+      console.log(new Date( i[ 1 ] ).getTime() > new Date( j[ 1 ] ).getTime() );
+      console.log('\n'); 
+      return new Date( i[ 1 ] ).getTime() > new Date( j[ 1 ] ).getTime();
     } );
     return <tbody> 
       {
