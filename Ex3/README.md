@@ -1,2 +1,2 @@
-# MakeNTU2017_MedCube
-one lap and three dxxks
+# 2017ESL Final Project
+### Intelligent Vender Machine
