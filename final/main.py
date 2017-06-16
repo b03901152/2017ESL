@@ -48,11 +48,11 @@ lcd = LCD.Adafruit_CharLCD(lcd_rs,
 			   lcd_backlight)
 
 
-lcd.message('Welcome to LaPing\nFuck you asshole')
+lcd.message('**Condom World**\nPick your size~~')
 # Wait 5 seconds
 time.sleep(4)
 lcd.clear()
-lcd.message('c======3\n--- c=======3')
+lcd.message('    c=======3\n--- c=======3')
 
 time.sleep(4)
 lcd.clear()
@@ -95,7 +95,8 @@ while True:
    #     os.popen(servo3_norm)
     if cur1 == 1:
         print(1)
-        lcd.message('Item 1!\nLaPing noGG')
+        sys.stdout.flush()
+        lcd.message('King Size!!!\nAre you that big??')
         time.sleep(2)
         lcd.clear()
         os.popen(servo1_norm)
@@ -103,7 +104,8 @@ while True:
         os.popen(servo1_stop)
     if cur2 == 1:
         print(2)
-        lcd.message('Item 2!\nLaPing noGG')
+        sys.stdout.flush()
+        lcd.message('Needle Size!\nHAHA so small^_^')
         time.sleep(2)
         lcd.clear()
         os.popen(servo2_anti)
@@ -111,7 +113,8 @@ while True:
         os.popen(servo2_stop)
     if cur3 == 1:
         print(3)
-        lcd.message('Item 3!\nLaPing noGG')
+        sys.stdout.flush()
+        lcd.message('Girl Size!\nWTF ????!!')
         time.sleep(2)
         lcd.clear()
         os.popen(servo3_anti)
