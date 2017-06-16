@@ -16,3 +16,12 @@ cd 2017ESL/final/
 ./run.sh
 ```
 
+Describes:
+
+`Avalon`: The web server maintaining the information of vending machine records.
+
+`PIGPIO`: The package enable some GPIO features.
+
+`main.py`: The main operating script, describes the physical effect.
+
+`clientForRPi3`: The web client that automatically send infromation from machine to server
