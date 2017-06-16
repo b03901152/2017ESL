@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Sales.css';
 
-const socket = io.connect();
+const socket = io.connect("http://52.179.13.42:3000/");
 class Sales extends Component {
   constructor( props ) {
     super( props );
