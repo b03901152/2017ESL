@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, ButtonToolbar, DropdownButton, MenuItem, Dropdown, Modal } from 'react-bootstrap/lib';
-import './config.css';
+// import './config.css';
 
 class App extends Component {
   constructor( props ) {
